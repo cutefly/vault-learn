@@ -1,0 +1,39 @@
+###
+
+GET https://vault.club012.com/v1/sys/seal-status
+#X-Vault-Request: true
+#X-Vault-Token: hvs.********
+###
+
+GET https://vault.club012.com/v1/sys/auth
+X-Vault-Token: hvs.********
+
+###
+PUT     https://vault.club012.com/v1/sys/policies/acl/developer-vault-policy
+X-Vault-Token: $VAULT_TOKEN
+{
+    "policy": 
+    "path \"dev-secrets/data/creds\" {
+        capabilities = [\"create\", \"update\"]
+    }
+    
+    path \"dev-secrets/data/creds\" {
+      capabilities = [\"read\"]
+    }"
+}
+
+###
+GET https://vault.club012.com/v1/sys/mounts
+X-Vault-Token: hvs.********
+
+###
+POST   https://vault.club012.com/v1/auth/userpass/login/pi-vault-user
+X-Vault-Token: hvs.********
+
+{
+  "password": "offspring"
+}
+
+###
+GET https://vault.club012.com/v1/dev-secrets/data/creds
+X-Vault-Token: hvs.********
